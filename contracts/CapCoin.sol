@@ -2,8 +2,8 @@ pragma solidity ^0.4.18;
 
 contract CapCoin {
 
-  event NewUser(string name, uint totalCoins);
-  event BoughtCoins(uint totalCoins);
+  event NewUser(string name);
+  // event BoughtCoins()
 
   uint coinSupply = 1000000;
   uint coinsBought = 0;
@@ -22,8 +22,8 @@ contract CapCoin {
     user.name = name;
     user.coinBalance = 0;
 
-    users.push(msg.sender);
-    NewUser(name, 0);
+    users.push(msg.sender) - 1;
+    NewUser(name);
   }
 
   function getUsers() public view returns (address[]) {
@@ -36,6 +36,6 @@ contract CapCoin {
 
   function buyTokens(uint tokens) public {
     addressToUser[msg.sender].coinBalance += tokens;
-    BoughtCoins(addressToUser[msg.sender].coinBalance);
+    // BoughtCoins(addressToUser[msg.sender].coinBalance);
   }
 }

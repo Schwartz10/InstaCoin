@@ -51,6 +51,7 @@ const mapDispatch = dispatch => {
   return {
     createUser: function(e, name, contract, account){
       e.preventDefault();
+      console.log('ACCOUNT', account)
       dispatch(addUser(name, contract.createUser, account));
     }
   }

@@ -27,7 +27,7 @@ class App extends Component {
     await this.props.getWeb3()
     await this.props.getContract(this.props.web3)
     await this.props.getAccounts(this.props.web3)
-    // this.props.findUser(this.props.contract.getUser, this.props.accounts[0])
+    // this.props.findUser(this.props.contract.getSingleUser, this.props.accounts[0])
     // console.log('account in info', this.props.accounts[0])
   }
 
@@ -62,8 +62,8 @@ function mapDispatchToProps(dispatch){
       return dispatch(fetchAccounts(web3));
     },
     findUser: function (contractFunc, account){
-      let user = contractFunc.call(res => console.log(res))
-      console.log(user)
+      contractFunc.call()
+      .then(res => console.log(res))
       // return dispatch(fetchUser(contractFunc, account));
     }
   }
