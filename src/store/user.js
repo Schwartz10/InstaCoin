@@ -18,7 +18,23 @@ const createUser = user => ({type: CREATE_USER, user})
  * THUNK CREATORS
  */
 
-export const fetchUser = (web3, address)  => {}
+export const fetchUser = (contractFunc, account)  => {
+  console.log('IN THE FETCH', contractFunc, 'account:', account)
+  return dispatch =>
+    contractFunc()
+    .then((error, res) => {
+      if (error) console.log(error)
+      if (!res) {
+        console.log('In here')
+        dispatch(getUser(null))
+      } else {
+        dispatch(getUser(res))
+      }
+    })
+    .catch(err => console.log(err))
+
+}
+
 export const addUser = (name, contractFunc, account) =>
   dispatch =>
     contractFunc(name, {from: account})
