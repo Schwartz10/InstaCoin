@@ -1,19 +1,18 @@
 pragma solidity ^0.4.18;
 
-contract CapCoin {
+import 'zeppelin-solidity/contracts/ownership/Ownable.sol';
+
+
+contract CapCoin is Ownable {
 
   event NewUser(string name);
   event BoughtTokens(uint coinBalance);
   event CreatedPost(string url);
-  event CreatedCaption(string url);
+  event CreatedCaption(string caption);
 
   uint coinSupply = 1000000;
   uint coinsBought = 0;
   uint contractNum;
-
-  function CapCoin () {
-    contractNum = 1;
-  }
 
   struct User {
     string name;
@@ -26,22 +25,16 @@ contract CapCoin {
     uint lotteryAmount;
   }
 
-  // app can only handle unique captions and single posts per users
+  struct Caption {
+    string caption;
+    address owner;
+    address post;
+  }
+
   mapping (address => User) public addressToUser;
   mapping (address => Post) public addressToPost;
-  mapping (string => address) public captionToAddress;
   address[] public users;
   address[] public posts;
-
-  function createUser(string name) public {
-    var user = addressToUser[msg.sender];
-
-    user.name = name;
-    user.coinBalance = 0;
-
-    users.push(msg.sender) -1;
-    NewUser(name);
-  }
 
   function getUsers() public view returns (address[]) {
     return users;
