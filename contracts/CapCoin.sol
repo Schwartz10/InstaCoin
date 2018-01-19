@@ -5,6 +5,7 @@ contract CapCoin {
   event NewUser(string name);
   event BoughtTokens(uint coinBalance);
   event CreatedPost(string url);
+  event CreatedCaption(string url);
 
   uint coinSupply = 1000000;
   uint coinsBought = 0;
@@ -27,8 +28,10 @@ contract CapCoin {
     string[] captions;
   }
 
+  // app can only handle unique captions and single posts per users
   mapping (address => User) public addressToUser;
   mapping (address => Post) public addressToPost;
+  mapping (string => address) public captionToAddress;
   address[] public users;
   address[] public posts;
 
@@ -71,6 +74,11 @@ contract CapCoin {
     posts.push(msg.sender) -1;
     addressToUser[msg.sender].coinBalance -= 5;
     CreatedPost(url);
+  }
+
+  function createCaption(string caption) public {
+    addressToPost[msg.sender].posts.push(caption);
+    captionToAddress[msg.sender] = caption;
   }
 
   function getPosts() public view returns (address[]) {
