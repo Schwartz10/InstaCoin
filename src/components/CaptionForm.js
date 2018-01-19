@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
+import { postCaption } from '../store/posts';
 
 class CaptionForm extends Component {
 
@@ -27,7 +28,7 @@ class CaptionForm extends Component {
         />
         <br /><br />
         <RaisedButton
-
+          onClick={e => this.props.createCaption(e, this.props.contract, this.props.accounts[0])}
           label="Submit Caption"
         />
         </span>
@@ -50,9 +51,9 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    createCaption: function(e, name, contract, account){
+    createCaption: function(e, caption, contract, account){
       e.preventDefault();
-      // dispatch(addUser(name, contract.createUser, account));
+      dispatch(postCaption(name, contract.createCaption, account));
     }
   }
 }

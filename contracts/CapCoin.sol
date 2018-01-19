@@ -18,14 +18,12 @@ contract CapCoin {
   struct User {
     string name;
     uint coinBalance;
-    uint postNum;
   }
 
   struct Post {
     string url;
     string userName;
     uint lotteryAmount;
-    string[] captions;
   }
 
   // app can only handle unique captions and single posts per users
@@ -74,11 +72,6 @@ contract CapCoin {
     posts.push(msg.sender) -1;
     addressToUser[msg.sender].coinBalance -= 5;
     CreatedPost(url);
-  }
-
-  function createCaption(string caption) public {
-    addressToPost[msg.sender].posts.push(caption);
-    captionToAddress[msg.sender] = caption;
   }
 
   function getPosts() public view returns (address[]) {

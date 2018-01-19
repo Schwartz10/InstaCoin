@@ -8,12 +8,14 @@ const defaultPosts = []
  */
 const CREATE_POST = 'CREATE_POST';
 const GET_POSTS = 'GET_POSTS';
+const CREATE_CAPTION = 'CREATE_CAPTION';
 
 /**
  * ACTION CREATORS
  */
 const createPost = post => ({type: CREATE_POST, post});
 const gotPosts = posts => ({type: GET_POSTS, posts});
+const postedCaption = caption => ({type: CREATE_CAPTION, caption})
 
 /**
  * THUNK CREATORS
@@ -47,6 +49,11 @@ export const fetchPosts = (fetchAddressArray, addressToPostFunc) =>
       dispatch(gotPosts(finalArr))
     })
     .catch(err => console.log(err))
+
+export const postCaption = (caption, contractFunc, account) =>
+  dispatch =>
+    contractFunc(caption, {from: account})
+    .then(res => console.log(res))
 
 /**
  * REDUCER
